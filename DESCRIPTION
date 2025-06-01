@@ -1,7 +1,7 @@
 Package: ConfidenceEllipse
 Type: Package
 Title: Computation of 2D and 3D Elliptical Joint Confidence Regions
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
     person(given = "Christian L.",
            family = "Goueguel",
@@ -13,20 +13,20 @@ Description: Computing elliptical joint confidence regions at a specified confid
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: cellWise, dplyr, forcats, ggplot2, magrittr, pcaPP, purrr,
         rgl, rlang, stats, tibble, tidyr, tidyselect
 URL: https://christiangoueguel.github.io/ConfidenceEllipse/,
         https://github.com/ChristianGoueguel/ConfidenceEllipse
-Suggests: knitr, rmarkdown, spelling, testthat (>= 3.0.0)
+Suggests: knitr, patchwork, rmarkdown, spelling, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: R (>= 2.10)
 Language: en-US
 Config/testthat/edition: 3
 BugReports: https://github.com/ChristianGoueguel/ConfidenceEllipse/issues
 NeedsCompilation: no
-Packaged: 2024-04-19 16:55:15 UTC; christiangoueguel
-Author: Christian L. Goueguel [aut, cre]
-    (<https://orcid.org/0000-0003-0521-3446>)
+Packaged: 2025-06-01 07:50:47 UTC; christiangoueguel
+Author: Christian L. Goueguel [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-0521-3446>)
 Repository: CRAN
-Date/Publication: 2024-04-22 14:52:38 UTC
+Date/Publication: 2025-06-01 08:10:02 UTC

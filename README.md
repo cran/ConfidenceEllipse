@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-# ConfidenceEllipse <img src="man/figures/logo.png" align="right" height="239" alt="" />
+# <img src="man/figures/logo.png" align="right" height="159" alt="ConfidenceEllipse package logo" />
 
 [![R-CMD-check](https://github.com/ChristianGoueguel/ConfidenceEllipse/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ChristianGoueguel/ConfidenceEllipse/actions/workflows/R-CMD-check.yaml)
 [![Project Status: Active – The project has reached a stable, usable
@@ -13,23 +13,35 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/ChristianGoueguel/ConfidenceEllipse/graph/badge.svg?token=JAGMXN2F70)](https://app.codecov.io/gh/ChristianGoueguel/ConfidenceEllipse)
+[![](https://cranlogs.r-pkg.org/badges/last-week/ConfidenceEllipse?color=orange)](https://cran.r-project.org/package=ConfidenceEllipse)
+[![](https://cranlogs.r-pkg.org/badges/ConfidenceEllipse?color=yellowgreen)](https://cran.r-project.org/package=ConfidenceEllipse)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/ConfidenceEllipse)](https://cran.r-project.org/package=ConfidenceEllipse)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ConfidenceEllipse)](https://CRAN.R-project.org/package=ConfidenceEllipse)
 <!-- badges: end -->
 
 The `ConfidenceEllipse` package computes the coordinate points of
-confidence ellipses and ellipsoids for a given bivariate and trivariate
-dataset. The size of the ellipse and ellipsoid is determined by the
-confidence level, and the shape is determined by the covariance matrix.
-The confidence level is usually chosen to be 95% or 99%, and the
-resulting confidence region contains the points that are expected to lie
-within the multivariate distribution.
+confidence region for a given bivariate and trivariate dataset. The size
+of the elliptical region is determined by the confidence level, and the
+shape is determined by the covariance matrix. The confidence level is
+usually chosen to be 95% or 99%, and the resulting confidence region
+contains the points that are expected to lie within the multivariate
+distribution.
 
 ## Installation
 
-You can install the development version of `ConfidenceEllipse` like so:
+You can install `ConfidenceEllipse` from CRAN using:
 
 ``` r
-# install.packages("remotes")
-# remotes::install_github("ChristianGoueguel/ConfidenceEllipse")
+install.packages("ConfidenceEllipse")
+```
+
+Alternatively you can grab the development version from github using
+devtools:
+
+``` r
+install.packages("devtools")
+devtools::install_github("ChristianGoueguel/ConfidenceEllipse")
 ```
 
 ## Example
@@ -71,7 +83,7 @@ glass %>% glimpse()
 #> $ SiO2      <dbl> 67.752, 67.076, 63.254, 63.790, 68.768, 69.628, 64.012, 70.6…
 #> $ P2O5      <dbl> 0.884, 0.938, 0.988, 1.200, 0.682, 0.698, 0.966, 0.210, 0.75…
 #> $ SO3       <dbl> 0.052, 0.024, 0.064, 0.115, 0.070, 0.038, 0.046, 0.310, 0.03…
-#> $ Cl2O      <dbl> 0.936, 0.966, 0.886, 0.988, 0.966, 0.908, 0.896, 0.676, 0.93…
+#> $ Cl        <dbl> 0.936, 0.966, 0.886, 0.988, 0.966, 0.908, 0.896, 0.676, 0.93…
 #> $ K2O       <dbl> 3.044, 3.396, 2.828, 2.878, 2.402, 3.196, 2.526, 2.326, 2.32…
 #> $ CaO       <dbl> 8.784, 8.636, 11.088, 10.833, 8.808, 6.160, 12.982, 6.324, 9…
 #> $ MnO       <dbl> 0.674, 0.698, 1.240, 0.978, 0.310, 1.170, 0.874, 0.214, 0.60…
@@ -82,7 +94,7 @@ glass %>% glimpse()
 
 ### Confidence Region
 
-#### Classical and robust confidence ellipse
+#### Classical and robust confidence ellipses
 
 First, the `confidence_ellipse` function is used to compute coordinate
 points of the confidence ellipse and then the ellipse is plotted on a
@@ -116,24 +128,14 @@ cutoff <- qchisq(0.95, df = 2)
 plot1 <- 
   ggplot() +
   geom_path(data = ellipse_95, aes(x = x, y = y), color = "blue", linewidth = 1L) +
-  geom_point(
-    data = glass %>% 
-      mutate(md = MDsquared) %>%
-      filter(md <= cutoff),
-    aes(x = SiO2, y = Na2O),
-    shape = 21L, color = "black", fill = "lightblue", size = 3L) +
-  geom_point(
-    data = glass %>% 
-      mutate(md = MDsquared) %>%
-      filter(md > cutoff),
-    aes(x = SiO2, y = Na2O),
-    shape = 21L, color = "black", fill = "gold", size = 3L) +
-  labs(
-    x = "SiO2 (wt.%)", 
-    y = "Na2O (wt.%)",
-    title = "Classical confidence ellipse\nat 95% confidence level") +
+  geom_point(data = glass %>% mutate(md = MDsquared) %>% filter(md <= cutoff), aes(x = SiO2, y = Na2O), shape = 21L, color = "black", fill = "lightblue", size = 3L) +
+  geom_point(data = glass %>% mutate(md = MDsquared) %>% filter(md > cutoff), aes(x = SiO2, y = Na2O), shape = 21L, color = "black", fill = "gold", size = 3L) +
+  labs(x = "SiO2 (wt.%)", y = "Na2O (wt.%)", title = "Classical confidence ellipse\nat 95% confidence level") +
   theme_bw() +
-  theme(legend.position = "none")
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none"
+    )
 ```
 
 ``` r
@@ -141,7 +143,9 @@ x_mcd <- glass %>%
   select(SiO2, Na2O) %>%
   as.matrix() %>%
   robustbase::covMcd()
+```
 
+``` r
 rob_MDsquared <- glass %>%
   select(SiO2, Na2O) %>%
   as.matrix() %>%
@@ -152,24 +156,14 @@ rob_MDsquared <- glass %>%
 plot2 <- 
   ggplot() +
   geom_path(data = rob_ellipse_95, aes(x = x, y = y), color = "blue", linewidth = 1L) +
-  geom_point(
-    data = glass %>% 
-      mutate(md = rob_MDsquared) %>%
-      filter(md <= cutoff),
-    aes(x = SiO2, y = Na2O),
-    shape = 21L, color = "black", fill = "lightblue", size = 3L) +
-  geom_point(
-    data = glass %>% 
-      mutate(md = rob_MDsquared) %>%
-      filter(md > cutoff),
-    aes(x = SiO2, y = Na2O),
-    shape = 21L, color = "black", fill = "gold", size = 3L) +
-  labs(
-    x = "SiO2 (wt.%)", 
-    y = "Na2O (wt.%)",
-    title = "Robust confidence ellipse\nat 95% confidence level") +
+  geom_point(data = glass %>% mutate(md = rob_MDsquared) %>% filter(md <= cutoff), aes(x = SiO2, y = Na2O), shape = 21L, color = "black", fill = "lightblue", size = 3L) +
+  geom_point(data = glass %>% mutate(md = rob_MDsquared) %>% filter(md > cutoff), aes(x = SiO2, y = Na2O), shape = 21L, color = "black", fill = "gold", size = 3L) +
+  labs(x = "SiO2 (wt.%)", y = "Na2O (wt.%)", title = "Robust confidence ellipse\nat 95% confidence level") +
   theme_bw() +
-  theme(legend.position = "none")
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none"
+    )
 ```
 
 ``` r
@@ -214,7 +208,11 @@ ggplot() +
   scale_color_brewer(palette = "Set1", direction = 1) +
   labs(x = "PC1", y = "PC2", title = "Principal component analysis") +
   theme_bw() +
-  theme(legend.position = "none")
+  theme(
+    aspect.ratio = .7,
+    panel.grid = element_blank(),
+    legend.position = "none"
+    )
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
@@ -261,4 +259,4 @@ rgl::points3d(
 rgl::view3d(theta = 260, phi = 30, fov = 60, zoom = .85)
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1-rgl.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-19-1.-rgl.png" width="100%" />
